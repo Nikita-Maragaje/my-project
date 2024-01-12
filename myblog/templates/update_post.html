@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} 
+  Edit Post
+{% endblock %}
+{% block content %}
+<h1>Edit Post</h1>
+<br><br>
+{% if user.is_authenticated %}
+  {% if user.id == post.author.id %} 
+    <div class="form-group"></div>
+        <form method="POST">
+            {% csrf_token %} 
+            {{form.as_p}}
+            <button class="btn btn-success">Update</button>
+        </form>
+    </div>
+  {% else %} 
+     you cannot edit this post 
+  {% endif %}
+{% else %} 
+  you cannot update post without login
+{% endif %}
+
+{% endblock %}

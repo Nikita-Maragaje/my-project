@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} 
+  {{ post.title }}
+{% endblock %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<small>{{ post.author.first_name }}
+    {{ post.author.last_name }}
+    {{ post.author.email }}
+</small>
+<p>{{ post.created_at }}</p>
+{% if user.is_authenticated %}
+  {% if user.id == post.author.id %}
+    <a href="{% url 'update_post' post.pk %}">Edit Post</a>
+      <br>
+    <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
+  {% endif %}
+{% endif %}
+
+<h2>Comments</h2>
+{% if not post.comments.all %} 
+   no comments yet.. <a href="{% url 'add_comment' post.pk %}">Add one</a>
+{% else %} 
+    <a href="{% url 'add_comment' post.pk %}">Add Comments</a>
+    <br>
+    {% for comment in post.comments.all %} 
+      {{ comment.content }}
+      <a href="{% url 'update_comment' pk=comment.id %}">Edit</a>
+      <a href="{% url 'delete_comment' pk=comment.id %}">Delete</a>
+      <br>
+    {% endfor %} 
+{% endif %}
+<br><br>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+{% endblock %}

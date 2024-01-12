@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} 
+  Delete Post
+{% endblock %}
+{% block content %}
+<h1>Delete Post</h1>
+<br><br>
+{% if user.is_authenticated %} 
+   {% if user.id == post.author.id %}
+        <div class="form-group"></div>
+            <form method="POST">
+                {% csrf_token %} 
+                <button class="btn btn-success">Delete</button>
+            </form>
+        </div>
+    {% else %} 
+      you cannot delete this post 
+    {% endif %}
+  
+{% else %} 
+  you cannot delete post without login 
+{% endif %}
+
+{% endblock %}

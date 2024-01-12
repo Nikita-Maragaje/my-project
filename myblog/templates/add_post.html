@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} 
+  add new post
+{% endblock %}
+{% block content %}
+<h1>Add Posts</h1>
+<br><br>
+{% if user.is_authenticated %} 
+  <div class="form-group"></div>
+      <form method="POST">
+          {% csrf_token %} 
+          {{form.as_p}}
+          <button class="btn btn-success">Post</button>
+      </form>
+  </div>
+  <script>
+    var name = "{{ user.id }}";
+    document.getElementById("elder").value = name;
+  </script>
+{% else %} 
+  you cannot add posts without login 
+{% endif %}
+{% endblock %}
